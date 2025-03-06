@@ -37,7 +37,7 @@ class Libro (models.Model):
     resumen = models.TextField(db_column='T003Resumen')
     isbn = models.CharField(max_length=20, unique=True, db_column='T003ISBN')
     fecha_publicacion = models.DateField(db_column='T003Fecha_Publicacion' )
-    ##RELACIONES Foreign Key
+    ##RELACIONES FOREIGN KEY
     autor = models.ForeignKey(Autor, on_delete=models.CASCADE,related_name='libros', db_column='T001IdAutor')
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE,related_name='libros', db_column='T002IdEditorial')
 
