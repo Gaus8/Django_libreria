@@ -50,10 +50,10 @@ class Libro (models.Model):
         verbose_name_plural = 'Libros'
 
 class Miembro (models.Model):
-    id_miembro = models.AutoField(primary_key=True, editable=False,db_column='T004IdEditorial')
+    id_miembro = models.AutoField(primary_key=True, editable=False,db_column='T004IdMiembro')
     nombre = models.CharField(max_length=100, db_column='T004Nombre')
-    apellido = models.CharField(max_length=100, db_column='T004Direccion')
-    email = models.CharField(max_length=50, db_column='T004Telefono') 
+    apellido = models.CharField(max_length=100, db_column='T004Apellido')
+    email = models.CharField(max_length=50, db_column='T004Email') 
     fecha_membresia = models.DateField(db_column='T004Fecha_Membresia')
 
     def _str_(self):
