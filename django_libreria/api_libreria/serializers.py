@@ -1,5 +1,5 @@
 from rest_framework import serializers # type: ignore
-from .models import Autor,Editorial,Libro,Miembro
+from .models import Autor,Editorial,Libro,Miembro,Prestamo
 
 class AutorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +17,11 @@ class LibroSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MiembroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Miembro
+        fields = '__all__'
+
+class PrestamoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Miembro
         fields = '__all__'
