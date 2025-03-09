@@ -12,8 +12,8 @@ from .views import (
 # Define la lista de patrones de URL para la aplicación 'api_app'
 urlpatterns = [
     #CRUD AUTOR
-    path('autor/',ConsultarAutor.as_view(), name='consultar_autores'),
-    path('autor/',CrearAutor.as_view(), name='crear_autores'),
+    path('consultar/autor/',ConsultarAutor.as_view(), name='consultar_autores'),
+    path('crear/autor/',CrearAutor.as_view(), name='crear_autores'),
     path('autor/<int:id_autor>/eliminar/',EliminarAutor.as_view(), name='eliminar_autores'),
     path('autor/<int:id_autor>/actualizar/',ActualizarAutor.as_view(), name='actulizar_autores'),
     #CRUD EDITORIAL
