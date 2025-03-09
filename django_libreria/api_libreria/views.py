@@ -4,7 +4,7 @@ from rest_framework.response import Response  # type: ignore
 from rest_framework import generics, status  # type: ignore
 from rest_framework.exceptions import NotFound, ValidationError # type: ignore
 from .models import Autor,Editorial,Libro,Miembro,Prestamo
-from .serializers import AutorSerializer,LibroSerializer,PrestamoSerializer
+from .serializers import AutorSerializer,LibroSerializer,PrestamoSerializer, EditorialSerializer, MiembroSerializer
 from django.db.models import Q
 
 #Buscar libro por autor o editorial 
@@ -59,3 +59,69 @@ class ConsultarLibro(generics.ListCreateAPIView):
 
             serializer = self.get_serializer(prestamos,many=True)         
             return Response({'success': True, 'detail': 'Libros encontrados.', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
+    
+    #Metodo POST para añadir Autor, editorial, Libro, Miembro, Prestamo 
+
+
+    # Vista específica para crear autor
+class CrearAutor(generics.CreateAPIView):
+    queryset = Autor.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    serializer_class = AutorSerializer  # Define el serializador a utilizar
+
+    # Método POST para crear un autor
+    def post(self, request):
+        serializer = AutorSerializer(data=request.data)  # Serializa los datos de la solicitud
+        serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
+        serializer.save()  # Guarda el nuevo autor
+        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo autor
+    
+
+    # Vista específica para crear una editorial
+class CrearEditorial(generics.CreateAPIView):
+    queryset = Editorial.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    serializer_class = Editorial  # Define el serializador a utilizar
+
+    # Método POST para crear una nueva editorial
+    def post(self, request):
+        serializer = EditorialSerializer(data=request.data)  # Serializa los datos de la solicitud
+        serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
+        serializer.save()  # Guarda la nueva editorial
+        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos de la nueva editorial
+    
+
+    # Vista específica para crear un libro
+class CrearLibro(generics.CreateAPIView):
+    queryset = Libro.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    serializer_class = LibroSerializer  # Define el serializador a utilizar
+
+    # Método POST para crear un nuevo libro 
+    def post(self, request):
+        serializer = LibroSerializer(data=request.data)  # Serializa los datos de la solicitud
+        serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
+        serializer.save()  # Guarda el nuevo libro
+        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo libro
+    
+    # Vista específica para crear miembros
+class CrearMiembro(generics.CreateAPIView):
+    queryset = Miembro.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    serializer_class = MiembroSerializer  # Define el serializador a utilizar
+
+    # Método POST para crear un nuevo miembro
+    def post(self, request):
+        serializer = MiembroSerializer(data=request.data)  # Serializa los datos de la solicitud
+        serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
+        serializer.save()  # Guarda el nuevo miembro
+        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo miembro
+    
+
+    # Vista específica para crear prestamo
+class CrearPrestamo(generics.CreateAPIView):
+    queryset = Prestamo.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    serializer_class = PrestamoSerializer  # Define el serializador a utilizar
+
+    # Método POST para crear un nuevo prestamo
+    def post(self, request):
+        serializer =PrestamoSerializer(data=request.data)  # Serializa los datos de la solicitud
+        serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
+        serializer.save()  # Guarda el nuevo prestamo
+        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo prestamo
