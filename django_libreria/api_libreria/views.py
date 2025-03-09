@@ -63,18 +63,46 @@ class ConsultarLibro(generics.ListCreateAPIView):
     #Metodo POST para añadir Autor, editorial, Libro, Miembro, Prestamo 
 
 
-    # Vista específica para crear autor
-class CrearAutor(generics.CreateAPIView):
+#AUTOR
+# GET AUTOR
+class ConsultarAutor(generics.ListCreateAPIView):
     queryset = Autor.objects.all()  # Define el conjunto de consultas para obtener todas las personas
     serializer_class = AutorSerializer  # Define el serializador a utilizar
 
-    # Método POST para crear un autor
+    # Método GET para listar todas las personas
+    def get(self, request):
+        autores = Autor.objects.all()  # Obtiene todas los autores
+        serializer = AutorSerializer(autores, many=True)  # Serializa las personas
+        if not autores:
+            raise NotFound('No se encontraron personas.')  # Lanza una excepción si no se encuentran personas
+        return Response({'success': True, 'detail': 'Listado de personas.', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
+
+
+# POST AUTOR
+class CrearAutor(generics.CreateAPIView):
+    queryset = Autor.objects.all()  # Define el conjunto de consultas para obtener todos los autores
+    serializer_class = AutorSerializer  # Define el serializador a utilizar
+
+    # Método POST para crear una nueva autor
     def post(self, request):
         serializer = AutorSerializer(data=request.data)  # Serializa los datos de la solicitud
         serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
-        serializer.save()  # Guarda el nuevo autor
-        return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo autor
-    
+        serializer.save()  # Guarda la nueva persona
+        return Response({'success': True, 'detail': 'Autor creado correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos de la nueva persona
+
+# DELETE AUTOR
+class EliminarAutor(generics.DestroyAPIView):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+    lookup_field = 'id_autor'
+
+#PUT AUTOR
+class ActualizarAutor(generics.UpdateAPIView):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+    lookup_field = 'id_autor'  # Django REST Framework usará 'id' para buscar y actualizar
+
+##EDITORIAL
 
     # Vista específica para crear una editorial
 class CrearEditorial(generics.CreateAPIView):
