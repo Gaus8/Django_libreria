@@ -37,5 +37,5 @@ urlpatterns = [
     path('prestamo/', FiltrarPrestamos.as_view(), name='filtrar_prestamos'),
     path('prestamo/', CrearPrestamos.as_view(), name='crear_prestamos'),
     path('prestamo/<int:id_prestamo>/eliminar/',EliminarPrestamos.as_view(), name='eliminar_prestamos'),
-    path('prestamo/<int:id_prestamo>/actualizar/',ActualizarPrestamos.as_view(), name='actualizar_prestamos'),
+    path('prestamo/<int:id_prestamo>/actualizar/',ActualizarMiembro.as_view(), name='actualizar_prestamos'),
     ]

@@ -32,7 +32,7 @@ class Editorial (models.Model):
         verbose_name_plural = 'Editoriales'
 
 class Libro (models.Model):
-    id_libro = models.AutoField(primary_key=True, editable=False, db_column='T003IdLibro')
+    id_Libro = models.AutoField(primary_key=True, editable=False, db_column='T003IdLibro')
     titulo = models.CharField(max_length=100, db_column='T003Titulo')
     resumen = models.TextField(db_column='T003Resumen')
     isbn = models.CharField(max_length=20, unique=True, db_column='T003ISBN')
@@ -69,10 +69,11 @@ class Prestamo (models.Model):
     fecha_prestamo = models.DateField(db_column='T005Fecha_Prestamo')
     fecha_devolucion = models.DateField(db_column='T005Fecha_Devolucion', blank=True, null=True)
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE,related_name='prestamos', db_column='T003IdLibro')
-    miembro = models.ForeignKey(Miembro, on_delete=models.CASCADE,related_name='prestamos', db_column='T004IdMiembro')
+    miembro = models.ForeignKey(Miembro, on_delete=models.CASCADE, related_name='prestamos', db_column='T004IdMiembro')
+
 
     def str(self):
-        return f"{self.nombre} {self.direccion}"
+        f"Préstamo {self.id_prestamo}: Libro {self.libro} para {self.miembro}"
 
     class Meta:
         db_table = 'T005'
