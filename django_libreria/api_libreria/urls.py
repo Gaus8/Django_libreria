@@ -13,7 +13,7 @@ urlpatterns = [
     path('consultar/prestamo/', ConsultarLibro.as_view(), name='libro-prestamo'),
     path('crear/autor/',CrearAutor.as_view(), name='autores'),
     path('crear/editorial/',CrearEditorial.as_view(), name='Editoriales'),
-    path('/crear/libro/', CrearLibro.as_view(), name='libros'),
+    path('crear/libro/', CrearLibro.as_view(), name='libros'),
     path('crear/miembro/', CrearMiembro.as_view(), name='miembros'),
     path('crear/prestamo/', CrearPrestamo.as_view(), name='prestamo')
     ]
