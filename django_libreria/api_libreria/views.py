@@ -93,7 +93,7 @@ class CrearAutor(generics.CreateAPIView):
 class EliminarAutor(generics.DestroyAPIView): # USO DE DESTROY PARA ELIMINAR DATOS
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
-    lookup_field = 'id_autor'#USO DEL ID DE LA TABLA PARA LA ELIMINACION
+    lookup_field = 'fk'#USO DEL ID DE LA TABLA PARA LA ELIMINACION
 
 #PUT
 class ActualizarAutor(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZAR DATOS
