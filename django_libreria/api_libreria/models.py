@@ -32,7 +32,7 @@ class Editorial (models.Model):
         verbose_name_plural = 'Editoriales'
 
 class Libro (models.Model):
-    id_libro = models.AutoField(primary_key=True, editable=False, db_column='T003IdLibro')
+    id_Libro = models.AutoField(primary_key=True, editable=False, db_column='T003IdLibro')
     titulo = models.CharField(max_length=100, db_column='T003Titulo')
     resumen = models.TextField(db_column='T003Resumen')
     isbn = models.CharField(max_length=20, unique=True, db_column='T003ISBN')
