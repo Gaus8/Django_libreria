@@ -69,10 +69,11 @@ class Prestamo (models.Model):
     fecha_prestamo = models.DateField(db_column='T005Fecha_Prestamo')
     fecha_devolucion = models.DateField(db_column='T005Fecha_Devolucion', blank=True, null=True)
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE,related_name='prestamos', db_column='T003IdLibro')
-    miembro = models.ForeignKey(Miembro, on_delete=models.CASCADE,related_name='prestamos', db_column='T004IdMiembro')
+    miembro = models.ForeignKey(Miembro, on_delete=models.CASCADE, related_name='prestamos', db_column='T004IdMiembro')
+
 
     def str(self):
-        return f"{self.nombre} {self.direccion}"
+        f"Préstamo {self.id_prestamo}: Libro {self.libro} para {self.miembro}"
 
     class Meta:
         db_table = 'T005'
