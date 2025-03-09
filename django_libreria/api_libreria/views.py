@@ -66,15 +66,15 @@ class ConsultarLibro(generics.ListCreateAPIView):
 #AUTOR
 # GET
 class ConsultarAutor(generics.ListCreateAPIView):
-    queryset = Autor.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    queryset = Autor.objects.all()  # Define el conjunto de consultas para obtener todos los autores
     serializer_class = AutorSerializer  # Define el serializador a utilizar
 
-    # Método GET para listar todas las personas
+    # Método GET para listar todos los autores
     def get(self, request):
         autores = Autor.objects.all()  # Obtiene todas los autores
-        serializer = AutorSerializer(autores, many=True)  # Serializa las personas
+        serializer = AutorSerializer(autores, many=True)  # Serializa los autores
         if not autores:
-            raise NotFound('No se encontraron personas.')  # Lanza una excepción si no se encuentran personas
+            raise NotFound('No se encontraron personas.')  # Lanza una excepción si no se encuentran autores
         return Response({'success': True, 'detail': 'Listado de personas.', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
 
 # POST
@@ -105,21 +105,21 @@ class ActualizarAutor(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZAR DA
 
 #GET
 class ConsultarEditorial(generics.ListCreateAPIView):
-    queryset = Editorial.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    queryset = Editorial.objects.all()  # Define el conjunto de consultas para obtener todas las editoriales
     serializer_class = EditorialSerializer  # Define el serializador a utilizar
 
-    # Método GET para listar todas las personas
+    # Método GET para listar todas las editoriales
     def get(self, request):
-        editoriales = Editorial.objects.all()  # Obtiene todas los autores
-        serializer = AutorSerializer(editoriales, many=True)  # Serializa las personas
+        editoriales = Editorial.objects.all()  # Obtiene todas las editoriales
+        serializer = AutorSerializer(editoriales, many=True)  # Serializa las editoriales
         if not editoriales:
-            raise NotFound('No se encontraron editoriales')  # Lanza una excepción si no se encuentran personas
+            raise NotFound('No se encontraron editoriales')  # Lanza una excepción si no se encuentran las editorirales
         return Response({'success': True, 'detail': 'Listado de Editoriales', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
 
 #POST
     # Vista específica para crear una editorial
 class CrearEditorial(generics.CreateAPIView):
-    queryset = Editorial.objects.all()  # Define el conjunto de consultas para obtener todas las personas
+    queryset = Editorial.objects.all()  # Define el conjunto de consultas para obtener todas las editoriales
     serializer_class = Editorial  # Define el serializador a utilizar
 
     # Método POST para crear una nueva editorial
@@ -141,6 +141,44 @@ class ActualizarEditorial(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZA
     serializer_class = EditorialSerializer
     lookup_field = 'id_editorial'  #USO DEL ID DE LA TABLA PARA LA MODIFICACION
 
+#LIBRO
+#FILTRAR
+class BuscarLibro(generics.ListCreateAPIView):
+    serializer_class = LibroSerializer  # Define el serializador a utilizar
+
+    # Método GET para listar los libros
+    def get_queryset(self):
+        buscar = self.request.query_params.get('buscar', None) #Obtiene el parametro para buscar los libros
+        if buscar: 
+            libros = Libro.objects.filter( #Filtracion de los libros que coincidan 
+                Q(autor__nombre__icontains=buscar) | Q(editorial__nombre__icontains=buscar)  #Busca los libros por los parametros indicados
+            )
+            return libros #Retorna el libro encontrado
+        return Libro.objects.all()  #Imprimir todos los libros sin busqueda
+    def get(self, request, *args, **kwargs):
+            libros = self.get_queryset() #Obtiene la informacion de los libros de get_queryset
+            if not libros.exists():
+                 raise NotFound('No se encontraron libros.')  # Lanza una excepción si no se encuentran los libros
+
+            serializer = self.get_serializer(libros,many=True)         
+            return Response({'success': True, 'detail': 'Libros encontrados.', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
+
+
+
+#GET
+class ConsultarLibro(generics.ListCreateAPIView):
+    queryset = Libro.objects.all()  # Define el conjunto de consultas para obtener todos los libro
+    serializer_class = LibroSerializer  # Define el serializador a utilizar
+
+    # Método GET para listar todas las personas
+    def get(self, request):
+        editoriales = Libro.objects.all()  # Obtiene todas los libros
+        serializer = LibroSerializer(editoriales, many=True)  # Serializa las personas
+        if not editoriales:
+            raise NotFound('No se encontraron libros registrados')  # Lanza una excepción si no se encuentran personas
+        return Response({'success': True, 'detail': 'Listado de Editoriales', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
+
+#POST
     # Vista específica para crear un libro
 class CrearLibro(generics.CreateAPIView):
     queryset = Libro.objects.all()  # Define el conjunto de consultas para obtener todas las personas
@@ -152,7 +190,21 @@ class CrearLibro(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)  # Valida los datos y lanza una excepción si no son válidos
         serializer.save()  # Guarda el nuevo libro
         return Response({'success': True, 'detail': 'Persona creada correctamente.', 'data': serializer.data}, status=status.HTTP_201_CREATED)  # Devuelve una respuesta con los datos del nuevo libro
-    
+
+#DELETE 
+class EliminarLibro(generics.DestroyAPIView): # USO DE DESTROY PARA ELIMINAR DATOS
+    queryset = Libro.objects.all()
+    serializer_class = LibroSerializer
+    lookup_field = 'id_libro'#USO DEL ID DE LA TABLA PARA LA ELIMINACION
+
+#PUT
+class ActualizarLibro(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZAR DATOS
+    queryset = Libro.objects.all()
+    serializer_class = LibroSerializer
+    lookup_field = 'id_libro'  #USO DEL ID DE LA TABLA PARA LA MODIFICACION
+
+
+## MIEMBRO
     # Vista específica para crear miembros
 class CrearMiembro(generics.CreateAPIView):
     queryset = Miembro.objects.all()  # Define el conjunto de consultas para obtener todas las personas
