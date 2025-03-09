@@ -39,7 +39,7 @@ class CrearAutor(generics.CreateAPIView):
 class EliminarAutor(generics.DestroyAPIView): # USO DE DESTROY PARA ELIMINAR DATOS
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
-    lookup_field = 'fk'#USO DEL ID DE LA TABLA PARA LA ELIMINACION
+    lookup_field = 'id_autor'#USO DEL ID DE LA TABLA PARA LA ELIMINACION
 
 #PUT
 class ActualizarAutor(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZAR DATOS
@@ -190,7 +190,6 @@ class ActualizarMiembro(generics.UpdateAPIView): #USO DE UPDATE PARA ACTUALIZAR 
 
 
 #PRESTAMO
-
 #FILTRAR
 class FiltrarPrestamos(generics.ListCreateAPIView):
     serializer_class = PrestamoSerializer # Define el serializador a utilizar
@@ -228,7 +227,7 @@ class ConsultarPrestamos(generics.ListCreateAPIView):
         prestamos = Prestamo.objects.all()  # Obtiene todas los prestamos
         serializer = PrestamoSerializer(prestamos, many=True)  # Serializa los prestamos
         if not prestamos:
-            raise NotFound('No se encontraron prestamos')  # Lanza una excepción si no se prestamos
+            raise NotFound('No se encontraron pres  amos')  # Lanza una excepción si no se prestamos
         return Response({'success': True, 'detail': 'Listado de Editoriales', 'data': serializer.data}, status=status.HTTP_200_OK)  # Devuelve una respuesta con los datos serializados
 
     # Vista específica para crear prestamo
