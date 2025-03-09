@@ -10,10 +10,10 @@ urlpatterns = [
     # Rutas para la gestión de libros
     # Lista de libros
     path('librerias/', BuscarLibro.as_view(), name='librerias-list'),
-    path('consultar/prestamo/', ConsultarLibro.as_view(), name='libro-prestamo'),
-    path('crear/autor/',CrearAutor.as_view(), name='autores'),
-    path('crear/editorial/',CrearEditorial.as_view(), name='Editoriales'),
-    path('/crear/libro/', CrearLibro.as_view(), name='libros'),
-    path('crear/miembro/', CrearMiembro.as_view(), name='miembros'),
-    path('crear/prestamo/', CrearPrestamo.as_view(), name='prestamo')
+    path('prestamo/', ConsultarLibro.as_view(), name='libro-prestamo'),
+    path('autor/',CrearAutor.as_view(), name='autores'),
+    path('editorial/',CrearEditorial.as_view(), name='Editoriales'),
+    path('libro/', CrearLibro.as_view(), name='libros'),
+    path('miembro/', CrearMiembro.as_view(), name='miembros'),
+    path('prestamo/', CrearPrestamo.as_view(), name='prestamo')
     ]
